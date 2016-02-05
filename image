@@ -53,10 +53,28 @@ Contents () {
 
 }
 
-#cd $1
-# 先在当前目录下创建一个同名文件夹，用于将生成的.imageset文件夹放到一起
-currentDirName=$(basename $(pwd))
-mkdir $currentDirName
+# 如果是单张图片，则直接在同一层级下生成imageset
+if [[ -f $1 ]]; then
+    #statements
+    imageFile=$(basename $1)
+    imageDir=${imageFile/\.png/\.imageset}
+    mkdir $imageDir
+
+    cp $imageFile $imageDir/
+    cd $imageDir
+
+    ScalePic $imageFile
+    Contents $imageFile
+    cd ..
+
+    exit 0
+fi
+
+
+# 先在当前目录同一层级创建一个(同名+倍图)文件夹，用于将生成的.imageset文件夹按照原来的目录结构放到一起
+currentDirName=$(basename $1)
+mkdir ${currentDirName}倍图
+cd $1
 # 1 遍历$1文件夹下的所有文件，即所有图片素材了。
 for file in ./*
 do
@@ -83,6 +101,6 @@ do
     Contents $imageFile
     cd ..
     # 5 将生成的文件夹移动到统一的文件夹中
-    mv $imageDir $currentDirName
+    mv $imageDir "../$1倍图"
 done
 #cd ..
