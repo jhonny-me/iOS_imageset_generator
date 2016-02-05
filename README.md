@@ -8,6 +8,10 @@
 
 ## 使用方法
 
+原始图片
+
+![](http://i11.tietuku.com/dbe69a2a322fbea6.png)
+
 ### 脚本
 
 将下载好的名为image的脚本文件copy到你常用的目录并配置环境变量
